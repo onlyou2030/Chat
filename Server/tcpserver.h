@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QtNetwork>
 #include <QTimer>
+#include <QMap>
 
 namespace Ui {
 class TcpServer;
@@ -20,8 +21,8 @@ public:
     bool checkSignIn(QString name,QString passward);
     bool checkSignUp(QString name,QString passward);
 
-protected:
-    void init();                         // 初始化函数用于完成一些诸如信号与槽之间的联系和变量初始化工作
+signals:
+    void userNumChange();
 
 private slots:
     void on_startBtn_clicked();
@@ -30,13 +31,17 @@ private slots:
 
     void receiveData();
 
-    void displayError(QAbstractSocket::SocketError);
+    void removeUserFormList();
+
+    void sendUserList();
 
 private:
     Ui::TcpServer *ui;
-    QTcpSocket *tcpSocket;
+    //QTcpSocket *tcpSocket;
     QTcpServer *tcpServer;
     QTimer *timer;
+    //QList<QTcpSocket *> userList;
+    QMap<QTcpSocket *,QString> userMessage;
 };
 
 #endif // TCPSERVER_H
